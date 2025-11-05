@@ -27,6 +27,7 @@
 
 <body class="@yield('body_class')">
     @include('partials.nav')
+    @include('partials.cart')
 
     <main>
         @yield('content')
@@ -35,7 +36,8 @@
 
 
     @include('partials.footer')
-
+    <script src="{{ asset('js/cart.js') }}"></script>     
+    <script src="{{ asset('js/cart.js') }}"></script>
     @stack('scripts')
 
 

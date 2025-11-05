@@ -21,7 +21,7 @@ let productData = [
 
 let imgesArr = [];
 for (let i = 0; i < names.length; i++) {
-    imgesArr[i] = `images/p1 (${i+1}).jpg`;
+    imgesArr[i] = `/images/p1 (${i+1}).jpg`;
 }
 
 // Hàm tạo products
@@ -59,7 +59,7 @@ function createProducts(filteredIndices = null) {
         img.style.cursor = "pointer";
         
         img.addEventListener("click", function() {
-            window.location.href = `details.html?id=${index + 1}`;
+            window.location.href = `/details?id=${index + 1}`;
         });
         
         let head2 = document.createElement("h2");

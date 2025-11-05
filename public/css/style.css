@@ -71,7 +71,7 @@ ul {
 }
 
 .background-img {
-    background: rgba(255, 255, 255, 35%);
+    background:url(../images/backgroundImg.jpeg), rgba(255, 255, 255, 35%);
     background-size: cover;
     background-blend-mode: overlay;
 }
@@ -1211,7 +1211,6 @@ h6 {
 
 .product-info {
     padding: 20px;
-    text-align: center;
 }
 
 .product-name {

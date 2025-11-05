@@ -1,4 +1,4 @@
-
+﻿
     let cart = [];
 
     // Load cart from memory on page load
@@ -163,7 +163,7 @@
         if (isLoggedIn) {
             userSection.innerHTML = '<a href="account.html"><i class="fa-solid fa-user user-icon"></i></a>';
         } else {
-            userSection.innerHTML = '<a href="login.html"><i class="fa-solid fa-user user-icon"></i><span style="font-family: \'Brygada 1918\', serif !important;">Đăng nhập</span></a>';
+            userSection.innerHTML = '<a href="/login"><i class="fa-solid fa-user user-icon"></i><span style="font-family: \'Brygada 1918\', serif !important;">Đăng nhập</span></a>';
 
         }
     }

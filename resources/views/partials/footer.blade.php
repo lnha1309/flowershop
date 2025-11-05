@@ -1,4 +1,4 @@
-<footer class="ani" style="position: relative; overflow: hidden;">
+﻿<footer class="ani" style="position: relative; overflow: hidden;">
     <div style="position: absolute; top: 0; left: 0; right: 0; height: 1px; background: linear-gradient(to right, transparent, rgba(255,255,255,0.2), transparent);"></div>
     
     <div class="container" style="padding: 60px 15px 40px;">
@@ -36,9 +36,9 @@
             <div class="col-lg-4 col-md-4 mb-4" style="padding-left: 30px; padding-right: 30px; position: relative;">
                 <h3 style="color: white; font-family: 'Brygada 1918', serif; font-size: 1.2rem; margin-bottom: 20px; font-weight: 600; letter-spacing: 1px;">LIÊN KẾT</h3>
                 <ul style="list-style: none; padding: 0; margin: 0;">
-                    <li style="margin-bottom: 12px;"><a class="footer-link" href="home.html" style="color: rgba(255,255,255,0.6); font-family: 'Brygada 1918', serif; text-decoration: none; transition: all 0.3s ease; display: inline-block;">Trang chủ</a></li>
-                    <li style="margin-bottom: 12px;"><a class="footer-link" href="products.html" style="color: rgba(255,255,255,0.6); font-family: 'Brygada 1918', serif; text-decoration: none; transition: all 0.3s ease; display: inline-block;">Sản phẩm</a></li>
-                    <li style="margin-bottom: 12px;"><a class="footer-link" href="about.html" style="color: rgba(255,255,255,0.6); font-family: 'Brygada 1918', serif; text-decoration: none; transition: all 0.3s ease; display: inline-block;">Về chúng tôi</a></li>
+                    <li style="margin-bottom: 12px;"><a class="footer-link" href="{{ route('home') }}" style="color: rgba(255,255,255,0.6); font-family: 'Brygada 1918', serif; text-decoration: none; transition: all 0.3s ease; display: inline-block;">Trang chủ</a></li>
+                    <li style="margin-bottom: 12px;"><a class="footer-link" href="{{ route('products') }}" style="color: rgba(255,255,255,0.6); font-family: 'Brygada 1918', serif; text-decoration: none; transition: all 0.3s ease; display: inline-block;">Sản phẩm</a></li>
+                    <li style="margin-bottom: 12px;"><a class="footer-link" href="{{ route('about') }}" style="color: rgba(255,255,255,0.6); font-family: 'Brygada 1918', serif; text-decoration: none; transition: all 0.3s ease; display: inline-block;">Về chúng tôi</a></li>
                     <li style="margin-bottom: 12px;"><a class="footer-link" href="contact.html" style="color: rgba(255,255,255,0.6); font-family: 'Brygada 1918', serif; text-decoration: none; transition: all 0.3s ease; display: inline-block;">Liên hệ</a></li>
                 </ul>
                 <!-- Vertical divider -->

@@ -1,31 +1,9 @@
 @extends('layouts.app')
 @section('title', 'Trang chủ')
-@section('body_class', 'background-img')
+@section('body_class', 'background-color')
 
 @section('content')
-<!-- Cart Overlay -->
-
-<div class="cart-overlay" id="cartOverlay"></div>
-
-<!-- Cart Sidebar -->
-<div class="cart-sidebar" id="cartSidebar">
-    <div class="cart-header">
-        <h2>Your Cart</h2>
-        <button class="cart-close" id="cartClose">&times;</button>
-    </div>
-    <div class="cart-body" id="cartBody">
-        <!-- Cart content will be inserted here -->
-    </div>
-    <div class="cart-footer" id="cartFooter" style="display: none;">
-        <div class="cart-total">
-            <span>Total:</span>
-            <span id="cartTotal">$0.00</span>
-        </div>
-        <button class="cart-checkout" onclick="window.location.href='checkout.html'">
-            Proceed to Checkout
-        </button>
-    </div>
-</div>
+ 
 
 <div class="home animation">
     <div class="text-center head-title">
@@ -33,7 +11,7 @@
             <h2 class="mb-0" style="font-family: 'Uncial Antiqua', cursive !important;">Florencia</h2>
         </li>
         <p class="mb-5">Chúng tôi gửi trao yêu thương qua những đóa hoa</p>
-        <a href="products.html">Mua sắm ngay !</a>
+        <a href="{{ route('products') }}">Mua sắm ngay !</a>
     </div>
 </div>
 
@@ -224,7 +202,7 @@
             Nếu bạn muốn thiết kế một bó hoa đặc biệt theo phong cách riêng, hãy liên hệ với Floverance.
             Chúng tôi luôn sẵn lòng lắng nghe và giúp bạn kết hợp những loài hoa mang trọn cảm xúc bạn muốn gửi gắm.
         </p>
-        <a href="products.html">Mua Ngay</a>
+        <a href="{{ route('products') }}">Mua Ngay</a>
     </div>
 </div>
 
@@ -347,6 +325,5 @@
 @push('scripts')
 <script src="{{ asset('js/main.js') }}"></script>
 <script src="{{ asset('js/checkout/checkout_home.js') }}"></script>
-<script src="{{ asset('js/cart.js') }}"></script>
 @endpush
 @endsection
