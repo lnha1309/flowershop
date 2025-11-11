@@ -155,20 +155,6 @@
         });
     });
 
-    // User section update
-    function updateUserSection() {
-        const userSection = document.getElementById('userSection');
-        const isLoggedIn = sessionStorage.getItem('isLoggedIn') === 'true';
-
-        if (isLoggedIn) {
-            userSection.innerHTML = '<a href="account.html"><i class="fa-solid fa-user user-icon"></i></a>';
-        } else {
-            userSection.innerHTML = '<a href="/login"><i class="fa-solid fa-user user-icon"></i><span style="font-family: \'Brygada 1918\', serif !important;">Đăng nhập</span></a>';
-
-        }
-    }
-
-    // Tab switching function
     function switchTab(tab) {
         const featuredProducts = document.getElementById('featuredProducts');
         const latestProducts = document.getElementById('latestProducts');
@@ -201,5 +187,4 @@
     // Initialize on page load
     window.addEventListener('DOMContentLoaded', function () {
         loadCart();
-        updateUserSection();
     });
