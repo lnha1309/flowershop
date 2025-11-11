@@ -1,7 +1,10 @@
 // Executes when document is loaded
 document.addEventListener("DOMContentLoaded", (ev) => {
-  // Recent Orders Data
-  document.getElementById("recent-orders--table").appendChild(buildTableBody());
+  // Recent Orders Data (fallback to sample data if server didn't render rows)
+  const recentOrdersTable = document.getElementById("recent-orders--table");
+  if (recentOrdersTable && !recentOrdersTable.querySelector("tbody")) {
+    recentOrdersTable.appendChild(buildTableBody());
+  }
 
   // Updates Data
   document
@@ -11,7 +14,9 @@ document.addEventListener("DOMContentLoaded", (ev) => {
 
   // Sales Analytics
   const salesAnalytics = document.getElementById("analytics");
-  buildSalesAnalytics(salesAnalytics);
+  if (salesAnalytics && salesAnalytics.children.length === 0) {
+    buildSalesAnalytics(salesAnalytics);
+  }
 });
 
 // Document Builder

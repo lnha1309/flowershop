@@ -14,8 +14,8 @@
       <aside>
         <div class="top">
           <div class="logo">
-            <img src="{{ asset('admin-dashboard/images/logo.png') }}" alt="Logo" />
-            <h2>EGA<span class="danger">TOR</span></h2>
+            <img src="{{ asset('images/icon.png') }}" alt="Logo" />
+            <h2>FLOREN<span class="danger">CIA</span></h2>
           </div>
           <div class="close" id="close-btn">
             <span class="material-icons-sharp"> close </span>
@@ -23,47 +23,135 @@
         </div>
 
         <div class="sidebar">
-          <a href="#" class="active">
-            <span class="material-icons-sharp"> dashboard </span>
-            <h3>Dashboard</h3>
+@php
+    $menuGroups = [
+        'Tổng quan' => [
+            [
+                'label' => 'Dashboard',
+                'icon' => 'dashboard',
+                'href' => route('admin.dashboard'),
+                'active' => request()->routeIs('admin.dashboard'),
+            ],
+        ],
+        'Người dùng' => [
+            [
+                'label' => 'Người dùng',
+                'icon' => 'groups',
+                'table' => 'users',
+
+            ],
+            [
+                'label' => 'Vai trò',
+                'icon' => 'admin_panel_settings',
+                'table' => 'roles',
+
+            ],
+        ],
+        'Sản phẩm & Danh mục' => [
+            [
+                'label' => 'Sản phẩm',
+                'icon' => 'inventory_2',
+                'table' => 'products',
+
+            ],
+            [
+                'label' => 'Chủ đề',
+                'icon' => 'palette',
+                'table' => 'themes',
+
+            ],
+            [
+                'label' => 'Phong cách',
+                'icon' => 'style',
+                'table' => 'styles',
+
+            ],
+            [
+                'label' => 'Loài hoa',
+                'icon' => 'local_florist',
+                'table' => 'flower_types',
+
+            ],
+            [
+                'label' => 'Đối tượng',
+                'icon' => 'diversity_3',
+                'table' => 'recipients',
+
+            ],
+            [
+                'label' => 'Dịp tặng',
+                'icon' => 'event',
+                'table' => 'occasions',
+
+            ],
+        ],
+        'Bán hàng & Vận hành' => [
+            [
+                'label' => 'Đơn hàng',
+                'icon' => 'receipt_long',
+                'table' => 'orders',
+
+            ],
+            [
+                'label' => 'Chi tiết đơn',
+                'icon' => 'list_alt',
+                'table' => 'order_items',
+
+            ],
+            [
+                'label' => 'Theo dõi vận chuyển',
+                'icon' => 'local_shipping',
+                'table' => 'order_tracking',
+
+            ],
+        ],
+        'Tối ưu kinh doanh' => [
+            [
+                'label' => 'Khuyến mãi',
+                'icon' => 'sell',
+                'table' => 'promotions',
+
+            ],
+            [
+                'label' => 'Tồn kho',
+                'icon' => 'warehouse',
+                'table' => 'inventory',
+
+            ],
+            [
+                'label' => 'Đánh giá sản phẩm',
+                'icon' => 'reviews',
+                'table' => 'product_reviews',
+
+            ],
+        ],
+    ];
+
+    foreach ($menuGroups as &$group) {
+        foreach ($group as &$item) {
+            if (! empty($item['table']) && \Illuminate\Support\Facades\Schema::hasTable($item['table'])) {
+                $item['count'] = \Illuminate\Support\Facades\DB::table($item['table'])->count();
+            }
+        }
+        unset($item);
+    }
+    unset($group);
+@endphp
+
+@foreach ($menuGroups as $groupLabel => $items)
+          <p class="menu-group">{{ $groupLabel }}</p>
+          @foreach ($items as $item)
+          <a href="{{ $item['href'] ?? '#' }}" class="{{ ! empty($item['active']) ? 'active' : '' }}">
+            <span class="material-icons-sharp"> {{ $item['icon'] }} </span>
+            <div class="menu-copy">
+              <h3>{{ $item['label'] }}</h3>
+              @if (! empty($item['description']))
+                <small class="text-muted">{{ $item['description'] }}</small>
+              @endif
+            </div>
           </a>
-          <a href="#">
-            <span class="material-icons-sharp"> person_outline </span>
-            <h3>Customers</h3>
-          </a>
-          <a href="#">
-            <span class="material-icons-sharp"> receipt_long </span>
-            <h3>Orders</h3>
-          </a>
-          <a href="#">
-            <span class="material-icons-sharp"> insights </span>
-            <h3>Analytics</h3>
-          </a>
-          <a href="#">
-            <span class="material-icons-sharp"> mail_outline </span>
-            <h3>Messages</h3>
-            <span class="message-count">26</span>
-          </a>
-          <a href="#">
-            <span class="material-icons-sharp"> inventory </span>
-            <h3>Products</h3>
-          </a>
-          <a href="#">
-            <span class="material-icons-sharp"> report_gmailerrorred </span>
-            <h3>Reports</h3>
-          </a>
-          <a href="#">
-            <span class="material-icons-sharp"> settings </span>
-            <h3>Settings</h3>
-          </a>
-          <a href="#">
-            <span class="material-icons-sharp"> add </span>
-            <h3>Add Product</h3>
-          </a>
-          <a href="#">
-            <span class="material-icons-sharp"> logout </span>
-            <h3>Logout</h3>
-          </a>
+          @endforeach
+@endforeach
         </div>
       </aside>
 
