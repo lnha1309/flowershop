@@ -76,15 +76,31 @@
         color: #666;
         font-size: 18px;
     }
-    /* Apply Crimson Pro to products section */
+    
     .products * {
         font-family: 'Crimson Pro', serif !important;
+    }
+    
+    .products .name {
+        font-size: 25px !important;
+        line-height: 1.3;
+        margin-bottom: 5px;
+    }
+
+    .products .image {
+        height: 370px;
+        overflow: hidden;
+    }
+
+    .products .image .img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
     }
 </style>
 @endpush
 
 @section('content')
-    <!-- Background section -->
     <div class="background animation">
         <h1 class="head text-start" style="text-align: left !important;">
             <span style="font-family: 'Crimson Pro', serif !important; font-weight: 400 !important; font-size: 64px !important; letter-spacing: 6px !important;">
@@ -99,25 +115,23 @@
         </h1>
     </div>
 
-    <!-- Filter section -->
     <div class="filter-section ani">
         <div class="container">
-            <!-- Search bar -->
             <div class="search-box">
                 <input type="text" id="searchInput" class="form-control" placeholder="Tìm kiếm theo tên hoa...">
             </div>
             
-            <!-- Filters -->
             <div class="row">
                 <div class="col-md-2 col-sm-6">
                     <div class="filter-group">
                         <label>Chủ đề</label>
                         <select id="filterTheme">
                             <option value="">Tất cả</option>
-                            <option value="romantic">Lãng mạn</option>
-                            <option value="elegant">Thanh lịch</option>
-                            <option value="cheerful">Vui vẻ</option>
-                            <option value="natural">Tự nhiên</option>
+                            <option value="Lãng mạn">Lãng mạn</option>
+                            <option value="Thanh lịch">Thanh lịch</option>
+                            <option value="Tối giản">Tối giản</option>
+                            <option value="Vui vẻ">Vui vẻ</option>
+                            <option value="Tự nhiên">Tự nhiên</option>
                         </select>
                     </div>
                 </div>
@@ -126,10 +140,10 @@
                         <label>Đối tượng</label>
                         <select id="filterRecipient">
                             <option value="">Tất cả</option>
-                            <option value="lover">Người yêu</option>
-                            <option value="family">Gia đình</option>
-                            <option value="friend">Bạn bè</option>
-                            <option value="colleague">Đồng nghiệp</option>
+                            <option value="Người yêu">Người yêu</option>
+                            <option value="Gia đình">Gia đình</option>
+                            <option value="Bạn bè">Bạn bè</option>
+                            <option value="Đồng nghiệp">Đồng nghiệp</option>
                         </select>
                     </div>
                 </div>
@@ -138,10 +152,9 @@
                         <label>Kiểu dáng</label>
                         <select id="filterStyle">
                             <option value="">Tất cả</option>
-                            <option value="bouquet">Bó hoa</option>
-                            <option value="basket">Giỏ hoa</option>
-                            <option value="vase">Bình hoa</option>
-                            <option value="box">Hộp hoa</option>
+                            <option value="Bó hoa">Bó hoa</option>
+                            <option value="Hộp hoa">Hộp hoa</option>
+                            <option value="Chậu hoa">Chậu hoa</option>
                         </select>
                     </div>
                 </div>
@@ -150,10 +163,15 @@
                         <label>Loại hoa</label>
                         <select id="filterFlowerType">
                             <option value="">Tất cả</option>
-                            <option value="rose">Hoa hồng</option>
-                            <option value="lily">Hoa lily</option>
-                            <option value="gerbera">Hoa đồng tiền</option>
-                            <option value="mixed">Hoa hỗn hợp</option>
+                            <option value="Hoa hồng">Hoa hồng</option>
+                            <option value="Cẩm tú cầu">Cẩm tú cầu</option>
+                            <option value="Lan hồ điệp">Lan hồ điệp</option>
+                            <option value="Thược dược">Thược dược</option>
+                            <option value="Cát tường">Cát tường</option>
+                            <option value="Hoa lily">Hoa lily</option>
+                            <option value="Astilbe">Astilbe</option>
+                            <option value="Mẫu đơn">Mẫu đơn</option>
+                            <option value="Hoa dại">Hoa dại</option>
                         </select>
                     </div>
                 </div>
@@ -162,11 +180,11 @@
                         <label>Dịp lễ</label>
                         <select id="filterOccasion">
                             <option value="">Tất cả</option>
-                            <option value="birthday">Sinh nhật</option>
-                            <option value="anniversary">Kỷ niệm</option>
-                            <option value="wedding">Đám cưới</option>
-                            <option value="congratulation">Chúc mừng</option>
-                            <option value="apology">Xin lỗi</option>
+                            <option value="Sinh nhật">Sinh nhật</option>
+                            <option value="Kỉ niệm">Kỉ niệm</option>
+                            <option value="Đám cưới">Đám cưới</option>
+                            <option value="Chúc mừng">Chúc mừng</option>
+                            <option value="Khác">Khác</option>
                         </select>
                     </div>
                 </div>
@@ -180,10 +198,38 @@
         </div>
     </div>
 
-    <!-- Products section -->
     <div class="products ani pt-5">
         <div class="container text-center"></div>
     </div>
+
+    <!-- Pagination với inline style -->
+    <div class="container mt-4 mb-5">
+        <div class="d-flex justify-content-center align-items-center" style="gap: 15px;">
+            @if ($products->onFirstPage())
+                <span style="color: #ccc; font-family: 'Crimson Pro', serif; font-size: 16px; padding: 8px 16px; border: 2px solid #ddd; border-radius: 8px; background-color: #f8f9fa;">‹ Trước</span>
+            @else
+                <a href="{{ $products->previousPageUrl() }}" style="color: #8b7355; font-family: 'Crimson Pro', serif; font-size: 16px; padding: 8px 16px; border: 2px solid #ddd; border-radius: 8px; background-color: white; text-decoration: none;">‹ Trước</a>
+            @endif
+
+            <span style="color: #2c3e50; font-family: 'Crimson Pro', serif; font-size: 16px; font-weight: 600;">
+                Trang {{ $products->currentPage() }} / {{ $products->lastPage() }}
+            </span>
+
+            @if ($products->hasMorePages())
+                <a href="{{ $products->nextPageUrl() }}" style="color: #8b7355; font-family: 'Crimson Pro', serif; font-size: 16px; padding: 8px 16px; border: 2px solid #ddd; border-radius: 8px; background-color: white; text-decoration: none;">Sau ›</a>
+            @else 
+                <span style="color: #ccc; font-family: 'Crimson Pro', serif; font-size: 16px; padding: 8px 16px; border: 2px solid #ddd; border-radius: 8px; background-color: #f8f9fa;">Sau ›</span>
+            @endif
+        </div>
+    </div>
+
+    <script>
+        window.productsData = @json($products->items());
+        console.log('Raw products data:', window.productsData);
+        console.log('First product:', window.productsData[0]);
+        console.log('Has theme?', window.productsData[0]?.theme);
+        console.log('Has flower_type?', window.productsData[0]?.flower_type);
+    </script>
 @endsection
 
 @push('scripts')
@@ -192,4 +238,3 @@
 <script src="{{ asset('js/cart.js') }}"></script>
 <script src="{{ asset('js/products.js') }}"></script>
 @endpush
-

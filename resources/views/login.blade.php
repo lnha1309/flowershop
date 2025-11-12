@@ -34,8 +34,8 @@
                 <form action="{{ route('login.submit') }}" method="POST" class="w-100">
                     @csrf
                     <div class="form-floating mb-2 mb-md-3">
-                        <input type="email" class="form-control" id="emailInput" name="email" value="{{ old('email') }}" placeholder="Email" required>
-                        <label for="emailInput">Email</label>
+                        <input type="text" class="form-control" id="loginInput" name="login" value="{{ old('login') }}" placeholder="Tên đăng nhập hoặc Email" required>
+                        <label for="loginInput">Tên đăng nhập hoặc Email</label>
                     </div>
                     <div class="form-floating mb-2 mb-md-3">
                         <input type="password" class="form-control" id="passwordInput" name="password" placeholder="Mật khẩu" required>

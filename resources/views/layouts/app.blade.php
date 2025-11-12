@@ -22,6 +22,15 @@
     <link rel="icon" href="{{ asset('images/icon.png') }}">
     
     @stack('styles')
+
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+    @if(Auth::check())
+        <meta name="user-id" content="{{ Auth::id() }}">
+        <meta name="user-logged-in" content="true">
+    @endif
+    
+    @stack('styles')
+    @yield('head')
     
 </head>
 
