@@ -11,7 +11,7 @@
             <h2 class="mb-0" style="font-family: 'Uncial Antiqua', cursive !important;">Florencia</h2>
         </li>
         <p class="mb-5">Chúng tôi gửi trao yêu thương qua những đóa hoa</p>
-        <a href="{{ route('products') }}">Mua sắm ngay !</a>
+    <a href="{{ route('products.index') }}">Mua sắm ngay !</a>
     </div>
 </div>
 
@@ -202,7 +202,7 @@
             Nếu bạn muốn thiết kế một bó hoa đặc biệt theo phong cách riêng, hãy liên hệ với Floverance.
             Chúng tôi luôn sẵn lòng lắng nghe và giúp bạn kết hợp những loài hoa mang trọn cảm xúc bạn muốn gửi gắm.
         </p>
-        <a href="{{ route('products') }}">Mua Ngay</a>
+    <a href="{{ route('products.index') }}">Mua Ngay</a>
     </div>
 </div>
 

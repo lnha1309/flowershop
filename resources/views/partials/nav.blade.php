@@ -38,7 +38,7 @@
 <nav class="p-3 mb-0">
         <ul class="d-flex justify-content-around align-items-center mb-0">
             <li><a href="{{ route('home')}}" style="font-family: 'Brygada 1918', serif !important;">Trang chủ</a></li>
-            <li><a href="{{ route('products')}}" style="font-family: 'Brygada 1918', serif !important;">Sản phẩm</a></li>
+            <li><a href="{{ route('products.index') }}" style="font-family: 'Brygada 1918', serif !important;">Sản phẩm</a></li>
 <li class="none">
     <h2 class="mb-0" style="font-family: 'Uncial Antiqua', cursive !important;">Florencia</h2>
 </li>
@@ -51,11 +51,12 @@
                         <div class="user-menu">
                             <button class="user-trigger d-flex align-items-center gap-2" id="userMenuToggle" type="button">
                                 <i class="fa-solid fa-user user-icon" style="font-family: 'Font Awesome 6 Free' !important;"></i>
-                                <span style="font-family: 'Brygada 1918', serif !important;">
+                                <span style="font-family: 'Brygada 1918', serif !important; color:inherit; text-decoration:none;">
                                     {{ Auth::user()->full_name ?? Auth::user()->username ?? Auth::user()->email }}
                                 </span>
                             </button>
                             <div class="user-dropdown" id="userMenuDropdown">
+                                <a href="{{ route('account') }}" style="font-family: 'Brygada 1918', serif !important; display:block; margin-bottom:8px;">Tài khoản</a>
                                 <form action="{{ route('logout') }}" method="POST">
                                     @csrf
                                     <button type="submit" style="font-family: 'Brygada 1918', serif !important;">Đăng xuất</button>

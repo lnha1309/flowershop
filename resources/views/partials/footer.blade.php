@@ -37,7 +37,7 @@
                 <h3 style="color: white; font-family: 'Brygada 1918', serif; font-size: 1.2rem; margin-bottom: 20px; font-weight: 600; letter-spacing: 1px;">LIÊN KẾT</h3>
                 <ul style="list-style: none; padding: 0; margin: 0;">
                     <li style="margin-bottom: 12px;"><a class="footer-link" href="{{ route('home') }}" style="color: rgba(255,255,255,0.6); font-family: 'Brygada 1918', serif; text-decoration: none; transition: all 0.3s ease; display: inline-block;">Trang chủ</a></li>
-                    <li style="margin-bottom: 12px;"><a class="footer-link" href="{{ route('products') }}" style="color: rgba(255,255,255,0.6); font-family: 'Brygada 1918', serif; text-decoration: none; transition: all 0.3s ease; display: inline-block;">Sản phẩm</a></li>
+                    <li style="margin-bottom: 12px;"><a class="footer-link" href="{{ route('products.index') }}" style="color: rgba(255,255,255,0.6); font-family: 'Brygada 1918', serif; text-decoration: none; transition: all 0.3s ease; display: inline-block;">Sản phẩm</a></li>
                     <li style="margin-bottom: 12px;"><a class="footer-link" href="{{ route('about') }}" style="color: rgba(255,255,255,0.6); font-family: 'Brygada 1918', serif; text-decoration: none; transition: all 0.3s ease; display: inline-block;">Về chúng tôi</a></li>
                     <li style="margin-bottom: 12px;"><a class="footer-link" href="contact.html" style="color: rgba(255,255,255,0.6); font-family: 'Brygada 1918', serif; text-decoration: none; transition: all 0.3s ease; display: inline-block;">Liên hệ</a></li>
                 </ul>

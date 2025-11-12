@@ -336,38 +336,58 @@
     <div class="row">
       <!-- Product Image -->
       <div class="col-lg-6 mb-4">
-        <img src="images/p1 (1).jpg" alt="Blue Dream" class="product-image" id="productImage">
+        <img src="{{ $product->image_url_full }}" alt="{{ $product->name }}" class="product-image" id="productImage">
       </div>
 
       <!-- Product Information -->
       <div class="col-lg-6">
         <div class="product-info">
-          <h1 class="product-title" id="productName">Blue Dream</h1>
-          <p class="product-price" id="productPrice">10 $</p>
+          <h1 class="product-title">{{ $product->name }}</h1>
+          <p class="product-price">{{ number_format($product->price, 0, '.', ',') }} ₫</p>
 
           <!-- Product Attributes Badges -->
-          <div class="product-attributes" id="productAttributes"><!-- dynamic --></div>
+          <div class="product-attributes">
+            @if($product->theme)
+              <span class="attribute-badge"><i class="fas fa-palette"></i> {{ $product->theme }}</span>
+            @endif
+            @if($product->recipient)
+              <span class="attribute-badge"><i class="fas fa-user"></i> {{ $product->recipient }}</span>
+            @endif
+            @if($product->style)
+              <span class="attribute-badge"><i class="fas fa-flower"></i> {{ $product->style }}</span>
+            @endif
+            @if($product->flower_type)
+              <span class="attribute-badge"><i class="fas fa-leaf"></i> {{ $product->flower_type }}</span>
+            @endif
+            @if($product->occasion)
+              <span class="attribute-badge"><i class="fas fa-gift"></i> {{ $product->occasion }}</span>
+            @endif
+          </div>
 
-          <p class="product-description" id="productDescription">
-          </p>
+          <p class="product-description">{{ $product->description }}</p>
 
-          <ul class="product-details-list" id="productDetailsList">
-            <li><strong>Flowers:</strong> Blue Delphiniums, White Roses, Eucalyptus</li>
-            <li><strong>Size:</strong> Medium (30-35 cm)</li>
-            <li><strong>Wrapping:</strong> Premium white paper with ribbon</li>
-            <li><strong>Care:</strong> Change water daily, keep in cool place</li>
+          <ul class="product-details-list">
+            @if($product->size)
+              <li><strong>Size:</strong> {{ $product->size }}</li>
+            @endif
+            @if($product->wrapping)
+              <li><strong>Wrapping:</strong> {{ $product->wrapping }}</li>
+            @endif
+            @if($product->care)
+              <li><strong>Care:</strong> {{ $product->care }}</li>
+            @endif
           </ul>
 
           <div class="quantity-selector">
             <label class="qty-label">Quantity:</label>
-            <button class="quantity-btn" onclick="decreaseQuantity()">-</button>
+            <button class="quantity-btn" type="button" onclick="decreaseQuantity()">−</button>
             <input type="number" class="quantity-input" id="quantity" value="1" min="1" readonly>
-            <button class="quantity-btn" onclick="increaseQuantity()">+</button>
+            <button class="quantity-btn" type="button" onclick="increaseQuantity()">+</button>
           </div>
 
           <div class="action-buttons">
-            <button class="add-to-cart-btn" onclick="addToCart()">Add to Cart</button>
-            <button class="wishlist-btn" id="wishlistBtn" onclick="toggleWishlist()">
+            <button class="add-to-cart-btn" type="button" onclick="addToCart({{ $product->product_id }})">Add to Cart</button>
+            <button class="wishlist-btn" id="wishlistBtn" type="button" onclick="toggleWishlist({{ $product->product_id }})">
               <i class="fa-regular fa-heart" id="wishlistIcon"></i>
             </button>
           </div>
@@ -380,36 +400,33 @@
       <div class="col-12">
         <div class="rating-section">
           <h3 style="font-family: 'Mango Vintage Personal Use Only', cursive; margin-bottom: 20px;">Customer Reviews</h3>
-          <div class="stars">★★★★★</div>
-          <p class="rating-text">4.8 out of 5 stars (24 reviews)</p>
+          <div class="stars">
+            @for($i = 0; $i < floor($averageRating); $i++)
+              ★
+            @endfor
+            @if($averageRating - floor($averageRating) > 0)
+              ☆
+            @endif
+          </div>
+          <p class="rating-text">{{ number_format($averageRating, 1) }} out of 5 stars ({{ $totalReviews }} reviews)</p>
 
           <div class="reviews">
-            <div class="review-item">
-              <div class="review-author">Sarah Johnson</div>
-              <div class="review-stars">★★★★★</div>
-              <p class="review-text">
-                Absolutely beautiful bouquet! The blue flowers were so vibrant and fresh.
-                The arrangement arrived perfectly packaged and lasted over a week. Highly recommend!
-              </p>
-            </div>
-
-            <div class="review-item">
-              <div class="review-author">Michael Chen</div>
-              <div class="review-stars">★★★★★</div>
-              <p class="review-text">
-                Ordered this for my wife's birthday and she loved it! The color combination
-                is stunning and the quality exceeded my expectations. Will definitely order again.
-              </p>
-            </div>
-
-            <div class="review-item">
-              <div class="review-author">Emma Davis</div>
-              <div class="review-stars">★★★★☆</div>
-              <p class="review-text">
-                Very pretty arrangement. The flowers were fresh and the presentation was elegant.
-                Only giving 4 stars because I wished there were more blue flowers, but overall very satisfied.
-              </p>
-            </div>
+            @forelse($reviews as $review)
+              <div class="review-item">
+                <div class="review-author">{{ $review->user->full_name ?? 'Anonymous' }}</div>
+                <div class="review-stars">
+                  @for($i = 0; $i < $review->rating; $i++)
+                    ★
+                  @endfor
+                  @for($i = $review->rating; $i < 5; $i++)
+                    ☆
+                  @endfor
+                </div>
+                <p class="review-text">{{ $review->comment }}</p>
+              </div>
+            @empty
+              <p style="text-align: center; color: #999;">No reviews yet. Be the first to review this product!</p>
+            @endforelse
           </div>
         </div>
       </div>
@@ -423,7 +440,24 @@
 <div class="related-products ani">
   <div class="container">
     <h2 class="section-title">Related Products</h2>
-    <div class="row" id="relatedProductsContainer"><!-- dynamic --></div>
+    <div class="row">
+      @forelse($relatedProducts as $related)
+        <div class="col-lg-4 col-md-6 col-sm-12">
+          <div class="related-product-card">
+            <a href="{{ route('product.show', $related->product_id) }}" style="text-decoration: none; color: inherit;">
+              <img src="{{ $related->image_url_full ?? asset('images/placeholder.png') }}" alt="{{ $related->name }}" class="related-product-image">
+            </a>
+            <div class="related-product-info">
+              <h5 class="related-product-name">{{ $related->name }}</h5>
+              <p class="related-product-price">{{ number_format($related->price, 0, '.', ',') }} ₫</p>
+              <a href="{{ route('product.show', $related->product_id) }}" class="view-btn">View Details</a>
+            </div>
+          </div>
+        </div>
+      @empty
+        <p class="col-12" style="text-align: center; color: #999;">No related products available.</p>
+      @endforelse
+    </div>
   </div>
 </div>
 @endsection
@@ -782,21 +816,165 @@
     localStorage.setItem('wishlist', JSON.stringify(wishlist));
   }
 
-  function checkWishlistStatus() {
-    const productId = getProductId();
-    const wishlist = JSON.parse(localStorage.getItem('wishlist') || '[]');
-    const wishlistBtn = document.getElementById('wishlistBtn');
-    const wishlistIcon = document.getElementById('wishlistIcon');
-    if (wishlist.some(item => item.id === productId)) {
-      wishlistBtn.classList.add('active');
-      wishlistIcon.classList.remove('fa-regular');
-      wishlistIcon.classList.add('fa-solid');
+  // Tăng số lượng
+  function increaseQuantity() {
+    const quantityInput = document.getElementById('quantity');
+    quantityInput.value = parseInt(quantityInput.value) + 1;
+  }
+
+  // Giảm số lượng
+  function decreaseQuantity() {
+    const quantityInput = document.getElementById('quantity');
+    if (parseInt(quantityInput.value) > 1) {
+      quantityInput.value = parseInt(quantityInput.value) - 1;
     }
   }
+
+  // Thêm vào giỏ hàng
+  async function addToCart(productId) {
+    if (!@json(Auth::check() ? 'true' : 'false')) {
+      alert('Vui lòng đăng nhập để thêm sản phẩm vào giỏ hàng!');
+      window.location.href = '/login';
+      return;
+    }
+
+    const quantity = parseInt(document.getElementById('quantity').value);
+    const csrfToken = document.querySelector('meta[name="csrf-token"]').content;
+
+    try {
+      const response = await fetch('/cart/add', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'X-CSRF-TOKEN': csrfToken
+        },
+        body: JSON.stringify({
+          product_id: productId,
+          quantity: quantity
+        })
+      });
+
+      const data = await response.json();
+
+      if (data.success) {
+        document.getElementById('quantity').value = 1;
+        // Reload cart and show sidebar
+        if (typeof loadCart === 'function') {
+          await loadCart();
+          if (typeof showCartSidebar === 'function') {
+            showCartSidebar();
+          }
+        }
+      } else {
+        showErrorMessage(data.message || 'Có lỗi xảy ra!');
+      }
+    } catch (error) {
+      console.error('Error:', error);
+      showErrorMessage('Có lỗi xảy ra khi thêm sản phẩm!');
+    }
+  }
+
+  // Toggle wishlist
+  async function toggleWishlist(productId) {
+    if (!@json(Auth::check() ? 'true' : 'false')) {
+      alert('Vui lòng đăng nhập để thêm vào danh sách yêu thích!');
+      window.location.href = '/login';
+      return;
+    }
+
+    const wishlistBtn = document.getElementById('wishlistBtn');
+    const csrfToken = document.querySelector('meta[name="csrf-token"]').content;
+
+    try {
+      const checkResponse = await fetch(`/wishlist/check/${productId}`);
+      const checkData = await checkResponse.json();
+      const inWishlist = checkData.inWishlist;
+
+      if (inWishlist) {
+        // Remove from wishlist
+        const removeResponse = await fetch(`/wishlist/remove/${productId}`, {
+          method: 'DELETE',
+          headers: {
+            'X-CSRF-TOKEN': csrfToken
+          }
+        });
+        const removeData = await removeResponse.json();
+        if (removeData.success) {
+          wishlistBtn.classList.remove('active');
+          document.getElementById('wishlistIcon').classList.remove('fa-solid');
+          document.getElementById('wishlistIcon').classList.add('fa-regular');
+        } else {
+          showErrorMessage(removeData.message || 'Lỗi xóa khỏi wishlist');
+        }
+      } else {
+        // Add to wishlist
+        const addResponse = await fetch('/wishlist/add', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'X-CSRF-TOKEN': csrfToken
+          },
+          body: JSON.stringify({ product_id: productId })
+        });
+        const addData = await addResponse.json();
+        if (addData.success) {
+          wishlistBtn.classList.add('active');
+          document.getElementById('wishlistIcon').classList.remove('fa-regular');
+          document.getElementById('wishlistIcon').classList.add('fa-solid');
+        } else {
+          showErrorMessage(addData.message || 'Lỗi thêm vào wishlist');
+        }
+      }
+    } catch (error) {
+      console.error('Error:', error);
+      showErrorMessage('Có lỗi xảy ra!');
+    }
+  }
+
+  // Helper: show success message
+  function showSuccessMessage(message) {
+    const alertDiv = document.createElement('div');
+    alertDiv.style.cssText = 'position:fixed;top:20px;right:20px;background:#28a745;color:white;padding:15px 20px;border-radius:8px;z-index:9999;';
+    alertDiv.textContent = message;
+    document.body.appendChild(alertDiv);
+    
+    setTimeout(() => alertDiv.remove(), 3000);
+  }
+
+  // Helper: show error message
+  function showErrorMessage(message) {
+    const alertDiv = document.createElement('div');
+    alertDiv.style.cssText = 'position:fixed;top:20px;right:20px;background:#dc3545;color:white;padding:15px 20px;border-radius:8px;z-index:9999;';
+    alertDiv.textContent = message;
+    document.body.appendChild(alertDiv);
+    
+    setTimeout(() => alertDiv.remove(), 3000);
+  }
+
+  // Initialize wishlist status on page load
+  document.addEventListener('DOMContentLoaded', async function() {
+    const isLoggedIn = @json(Auth::check());
+    if (isLoggedIn) {
+      try {
+        const response = await fetch(`/wishlist/check/{{ $product->product_id }}`);
+        const data = await response.json();
+        
+        if (data.success && data.inWishlist) {
+          const wishlistBtn = document.getElementById('wishlistBtn');
+          wishlistBtn.classList.add('active');
+          document.getElementById('wishlistIcon').classList.remove('fa-regular');
+          document.getElementById('wishlistIcon').classList.add('fa-solid');
+        }
+      } catch (error) {
+        console.error('Error checking wishlist:', error);
+      }
+    }
+  });
+
+  // Load old functions (for related products section)
   window.addEventListener('DOMContentLoaded', function() {
     loadProductData();
     loadRelatedProducts();
-    checkWishlistStatus();
   });
 </script>
 <script src="{{ asset('js/main.js') }}"></script>
